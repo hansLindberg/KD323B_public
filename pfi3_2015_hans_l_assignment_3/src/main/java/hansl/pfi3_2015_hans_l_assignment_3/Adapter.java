@@ -1,6 +1,7 @@
 package hansl.pfi3_2015_hans_l_assignment_3;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,16 +34,19 @@ public class Adapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        Log.i("getGroupView","Started");
         LayoutInflater li = (LayoutInflater) this.c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = li.inflate(R.layout.list_collapsed,null);
 
-        TextView arrTime = (TextView) convertView.findViewById(R.id.travelMinutes);
-        String arrival = j.get(groupPosition).getTravelMinutes().toString();
-        arrTime.setText(arrival);
+        Journey journey = j.get(groupPosition);
 
-        TextView depTime = (TextView) convertView.findViewById(R.id.depTimeDev);
-        String departure = j.get(groupPosition).getDepTimeDeviation().toString();
+        TextView depTime = (TextView) convertView.findViewById(R.id.depTime);
+        String departure = journey.getDepDateTime().toString();
         depTime.setText(departure);
+
+        TextView arrTime = (TextView) convertView.findViewById(R.id.arrTime);
+        String arrival = journey.getArrDateTime().toString();
+        arrTime.setText(arrival);
 
 
         return convertView;
@@ -50,16 +54,19 @@ public class Adapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        Log.i("getChildView", "Started");
         LayoutInflater li = (LayoutInflater) this.c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = li.inflate(R.layout.list_expanded,null);
 
-        TextView arrTime = (TextView) convertView.findViewById(R.id.travelMinutes);
-        String arrival = j.get(groupPosition).getTravelMinutes().toString();
-        arrTime.setText(arrival);
+        Journey journey = j.get(groupPosition);
 
-        TextView depTime = (TextView) convertView.findViewById(R.id.depTimeDev);
-        String departure = j.get(groupPosition).getDepTimeDeviation().toString();
-        depTime.setText(departure);
+        TextView depTimeDev = (TextView) convertView.findViewById(R.id.depTimeDev);
+        String deviation = journey.getDepTimeDeviation();
+        depTimeDev.setText(deviation);
+
+        TextView travelMinutes = (TextView) convertView.findViewById(R.id.travelMinutes);
+        String time = journey.getTravelMinutes();
+        travelMinutes.setText(time);
 
         return convertView;
     }
