@@ -38,14 +38,14 @@ public class Adapter extends BaseExpandableListAdapter {
         LayoutInflater li = (LayoutInflater) this.c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = li.inflate(R.layout.list_collapsed,null);
 
-        Journey journey = j.get(groupPosition);
 
-        TextView depTime = (TextView) convertView.findViewById(R.id.depTime);
-        String departure = journey.getDepDateTime().toString();
+
+        TextView depTime = (TextView) convertView.findViewById(R.id.depTimeDev);
+        String departure = "Linje " +j.get(groupPosition).getLineOnFirstJourney();
         depTime.setText(departure);
 
-        TextView arrTime = (TextView) convertView.findViewById(R.id.arrTime);
-        String arrival = journey.getArrDateTime().toString();
+        TextView arrTime = (TextView) convertView.findViewById(R.id.travelMinutes);
+        String arrival ="Arrives in " +j.get(groupPosition).getTimeToDeparture() + " minutes";
         arrTime.setText(arrival);
 
 
@@ -58,15 +58,23 @@ public class Adapter extends BaseExpandableListAdapter {
         LayoutInflater li = (LayoutInflater) this.c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = li.inflate(R.layout.list_expanded,null);
 
-        Journey journey = j.get(groupPosition);
+
 
         TextView depTimeDev = (TextView) convertView.findViewById(R.id.depTimeDev);
-        String deviation = journey.getDepTimeDeviation();
-        depTimeDev.setText(deviation);
+        if(j.get(groupPosition).getDepTimeDeviation() != "") {
+
+
+            String departure = "Latency: " + j.get(groupPosition).getDepTimeDeviation() + " min";
+            depTimeDev.setText(departure);
+        }else{
+            String departure = "On Time";
+            depTimeDev.setText(departure);
+        }
 
         TextView travelMinutes = (TextView) convertView.findViewById(R.id.travelMinutes);
-        String time = journey.getTravelMinutes();
-        travelMinutes.setText(time);
+        String arrival = "TravelMinutes: " + j.get(groupPosition).getTravelMinutes().toString() + " min";
+        travelMinutes.setText(arrival);
+
 
         return convertView;
     }

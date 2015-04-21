@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,9 +21,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Travels extends Fragment{
+public class Travels extends Fragment implements AdapterView.OnItemSelectedListener{
 
-    ArrayList<Journey> journeyList = new ArrayList<Journey>();
+    private ArrayList<Journey> journeyList = new ArrayList<Journey>();
+    private Adapter adapter;
+    private Spinner spinnerFrom;
+    private Spinner spinnerTo;
 
     public Travels() {
         // Required empty public constructor
@@ -35,8 +40,17 @@ public class Travels extends Fragment{
         View view =  inflater.inflate(R.layout.fragment_travels,
                 container, false);
 
+        spinnerFrom = (Spinner) view.findViewById(R.id.spinner);
+        spinnerTo = (Spinner) view.findViewById(R.id.spinner2);
+
+
         ExpandableListView expl = (ExpandableListView)view.findViewById(R.id.expandableListView);
-        expl.setAdapter(new Adapter(getActivity(),journeyList));
+        adapter = new Adapter(getActivity(),journeyList);
+        expl.setAdapter(adapter);
+
+        spinnerFrom.setSelection(1);
+        spinnerFrom.setOnItemSelectedListener(this);
+        spinnerTo.setOnItemSelectedListener(this);
 
         return view;
     }
@@ -47,16 +61,43 @@ public class Travels extends Fragment{
         int id = item.getItemId();
         if (id == R.id.action_search){
             Log.i("action_search","started");
+
+            int fromStation = spinnerFrom.getSelectedItemPosition();
+            int toStation = spinnerTo.getSelectedItemPosition();
+
+            String[] stationNo = getResources().getStringArray(R.array.stationNumbers);
+            String searchURL = Constants.getURL(stationNo[fromStation], stationNo[toStation], 14);
+            journeyList.clear();
+            new DoInBackground().execute(searchURL);
+
+
             return true;
         }
+        else {
 
-        return super.onOptionsItemSelected(item);
+            return super.onOptionsItemSelected(item);
+        }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    private void finishedSearch(){
+        Log.i("onItemSelected", "Started");
+
+        int fromStation = spinnerFrom.getSelectedItemPosition();
+        int toStation = spinnerTo.getSelectedItemPosition();
+
+        String[] stationNo = getResources().getStringArray(R.array.stationNumbers);
+        String searchURL = Constants.getURL(stationNo[fromStation], stationNo[toStation], 14);
+        Log.i("searchURL",Constants.getURL(stationNo[fromStation], stationNo[toStation], 12));
+        new DoInBackground().execute(searchURL);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 
     private class DoInBackground extends AsyncTask<String,Void,Long> {
         @Override
@@ -66,12 +107,18 @@ public class Travels extends Fragment{
             //And put the Journeys in our list.
             journeyList.clear();
             journeyList.addAll(journeys.getJourneys());
+
+            Log.i("doInBackground","finished");
             return null;
         }
 
         @Override
         protected void onPostExecute(Long result) { //Called when the AsyncTask is all done
-            finishedSearch();
+            adapter.notifyDataSetChanged();
+            for (Journey si :journeyList){
+                Log.i("ExpFragment", "moment" + si.getStartStation().getStationName());
+
+            }
         }
     }
 

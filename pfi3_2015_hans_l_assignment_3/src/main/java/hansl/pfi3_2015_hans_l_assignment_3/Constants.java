@@ -1,6 +1,5 @@
 package hansl.pfi3_2015_hans_l_assignment_3;
 
-
 public class Constants {
 	public static final String testURL = "http://www.labs.skanetrafiken.se/v2.2/resultspage.asp?cmdaction=next&selPointFr=%7C81116%7C0&selPointTo=%7C65008%7C0&LastStart=2012-10-14%2008:00";
 	public static final String baseURL = "http://www.labs.skanetrafiken.se/v2.2/";
