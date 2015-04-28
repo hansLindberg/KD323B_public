@@ -3,8 +3,9 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="C:\Program Files\Android\Android Studio\gradle\gradle-2.2.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -13,6 +14,7 @@
             <option value="$PROJECT_DIR$/lecture_1_examples" />
             <option value="$PROJECT_DIR$/lecture_2_example" />
             <option value="$PROJECT_DIR$/lecture_3_examples" />
+            <option value="$PROJECT_DIR$/pfi3_2015_hans_l_assignment_3" />
           </set>
         </option>
       </GradleProjectSettings>

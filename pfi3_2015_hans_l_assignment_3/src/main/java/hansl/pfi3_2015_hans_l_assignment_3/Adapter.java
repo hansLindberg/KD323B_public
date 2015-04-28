@@ -40,13 +40,15 @@ public class Adapter extends BaseExpandableListAdapter {
 
 
 
-        TextView depTime = (TextView) convertView.findViewById(R.id.depTimeDev);
+        TextView depTime = (TextView) convertView.findViewById(R.id.depTime);
         String departure = "Linje " +j.get(groupPosition).getLineOnFirstJourney();
         depTime.setText(departure);
 
-        TextView arrTime = (TextView) convertView.findViewById(R.id.travelMinutes);
-        String arrival ="Arrives in " +j.get(groupPosition).getTimeToDeparture() + " minutes";
+
+        TextView arrTime = (TextView) convertView.findViewById(R.id.arrTime);
+        String arrival ="Avgår om " +j.get(groupPosition).getTimeToDeparture() + " min";
         arrTime.setText(arrival);
+
 
 
         return convertView;
@@ -62,18 +64,16 @@ public class Adapter extends BaseExpandableListAdapter {
 
         TextView depTimeDev = (TextView) convertView.findViewById(R.id.depTimeDev);
         if(j.get(groupPosition).getDepTimeDeviation() != "") {
-
-
-            String departure = "Latency: " + j.get(groupPosition).getDepTimeDeviation() + " min";
-            depTimeDev.setText(departure);
+            String deviation = "Sen: " + j.get(groupPosition).getDepTimeDeviation().toString() + " min";
+            depTimeDev.setText(deviation);
         }else{
-            String departure = "On Time";
-            depTimeDev.setText(departure);
+            String deviation = "I tid";
+            depTimeDev.setText(deviation);
         }
 
         TextView travelMinutes = (TextView) convertView.findViewById(R.id.travelMinutes);
-        String arrival = "TravelMinutes: " + j.get(groupPosition).getTravelMinutes().toString() + " min";
-        travelMinutes.setText(arrival);
+        String time = "Restid: " + j.get(groupPosition).getTravelMinutes().toString() + " min";
+        travelMinutes.setText(time);
 
 
         return convertView;

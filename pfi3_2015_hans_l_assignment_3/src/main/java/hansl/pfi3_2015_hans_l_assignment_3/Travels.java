@@ -52,21 +52,25 @@ public class Travels extends Fragment implements AdapterView.OnItemSelectedListe
         spinnerFrom.setOnItemSelectedListener(this);
         spinnerTo.setOnItemSelectedListener(this);
 
+        setHasOptionsMenu(true);
+
         return view;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
+        Log.i("onOptionsItemSelected","");
         int id = item.getItemId();
-        if (id == R.id.action_search){
-            Log.i("action_search","started");
+
+
+        if (id == R.id.refresh){
+            Log.i("knapp","started");
 
             int fromStation = spinnerFrom.getSelectedItemPosition();
             int toStation = spinnerTo.getSelectedItemPosition();
 
             String[] stationNo = getResources().getStringArray(R.array.stationNumbers);
-            String searchURL = Constants.getURL(stationNo[fromStation], stationNo[toStation], 14);
+            String searchURL = Constants.getURL(stationNo[fromStation], stationNo[toStation], 5);
             journeyList.clear();
             new DoInBackground().execute(searchURL);
 
@@ -88,8 +92,8 @@ public class Travels extends Fragment implements AdapterView.OnItemSelectedListe
         int toStation = spinnerTo.getSelectedItemPosition();
 
         String[] stationNo = getResources().getStringArray(R.array.stationNumbers);
-        String searchURL = Constants.getURL(stationNo[fromStation], stationNo[toStation], 14);
-        Log.i("searchURL",Constants.getURL(stationNo[fromStation], stationNo[toStation], 12));
+        String searchURL = Constants.getURL(stationNo[fromStation], stationNo[toStation], 5);
+        Log.i("searchURL",Constants.getURL(stationNo[fromStation], stationNo[toStation], 5));
         new DoInBackground().execute(searchURL);
     }
 

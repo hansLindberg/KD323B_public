@@ -3,7 +3,7 @@ package se.mah.k3.skaneAPI.model;
 import java.util.ArrayList;
 
 /**
- * Journeys class can hold a number o singular journeys. For example all transports from one stations to another
+ * Journeys class can hold a number o' singular journeys. For example all transports from one stations to another
  * @author K3LARA
  *
  */
